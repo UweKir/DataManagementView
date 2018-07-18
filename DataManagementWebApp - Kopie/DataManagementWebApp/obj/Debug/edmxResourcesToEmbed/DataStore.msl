@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="KTBDataManagerModelStoreContainer" CdmEntityContainer="KTBDataManagerEntities">
+    <EntitySetMapping Name="articles">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.article">
+        <MappingFragment StoreEntitySet="article">
+          <ScalarProperty Name="art_id" ColumnName="art_id" />
+          <ScalarProperty Name="art_name" ColumnName="art_name" />
+          <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="consumerCounters">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.consumerCounter">
+        <MappingFragment StoreEntitySet="consumerCounter">
+          <ScalarProperty Name="cc_id" ColumnName="cc_id" />
+          <ScalarProperty Name="cc_processingDate" ColumnName="cc_processingDate" />
+          <ScalarProperty Name="cc_date" ColumnName="cc_date" />
+          <ScalarProperty Name="cc_source" ColumnName="cc_source" />
+          <ScalarProperty Name="cc_counterValue" ColumnName="cc_counterValue" />
+          <ScalarProperty Name="cc_sourceIndex" ColumnName="cc_sourceIndex" />
+          <ScalarProperty Name="con_id" ColumnName="con_id" />
+          <ScalarProperty Name="loc_id" ColumnName="loc_id" />
+          <ScalarProperty Name="dev_id" ColumnName="dev_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="consumptions">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.consumption">
+        <MappingFragment StoreEntitySet="consumption">
+          <ScalarProperty Name="con_id" ColumnName="con_id" />
+          <ScalarProperty Name="con_type" ColumnName="con_type" />
+          <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="devices">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.device">
+        <MappingFragment StoreEntitySet="device">
+          <ScalarProperty Name="dev_id" ColumnName="dev_id" />
+          <ScalarProperty Name="dev_name" ColumnName="dev_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="locations">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.location">
+        <MappingFragment StoreEntitySet="location">
+          <ScalarProperty Name="loc_id" ColumnName="loc_id" />
+          <ScalarProperty Name="loc_name" ColumnName="loc_name" />
+          <ScalarProperty Name="loc_active" ColumnName="loc_active" />
+          <ScalarProperty Name="loc_lastKeepAlive" ColumnName="loc_lastKeepAlive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="productions">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.production">
+        <MappingFragment StoreEntitySet="production">
+          <ScalarProperty Name="prod_id" ColumnName="prod_id" />
+          <ScalarProperty Name="prod_date" ColumnName="prod_date" />
+          <ScalarProperty Name="prod_value" ColumnName="prod_value" />
+          <ScalarProperty Name="prod_minCounter" ColumnName="prod_minCounter" />
+          <ScalarProperty Name="prod_maxCounter" ColumnName="prod_maxCounter" />
+          <ScalarProperty Name="art_id" ColumnName="art_id" />
+          <ScalarProperty Name="loc_id" ColumnName="loc_id" />
+          <ScalarProperty Name="dev_id" ColumnName="dev_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="scaleCounters">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.scaleCounter">
+        <MappingFragment StoreEntitySet="scaleCounter">
+          <ScalarProperty Name="sc_id" ColumnName="sc_id" />
+          <ScalarProperty Name="sc_processingDate" ColumnName="sc_processingDate" />
+          <ScalarProperty Name="sc_date" ColumnName="sc_date" />
+          <ScalarProperty Name="sc_source" ColumnName="sc_source" />
+          <ScalarProperty Name="sc_counterValue" ColumnName="sc_counterValue" />
+          <ScalarProperty Name="sc_sourceIndex" ColumnName="sc_sourceIndex" />
+          <ScalarProperty Name="art_id" ColumnName="art_id" />
+          <ScalarProperty Name="loc_id" ColumnName="loc_id" />
+          <ScalarProperty Name="dev_id" ColumnName="dev_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="units">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.unit">
+        <MappingFragment StoreEntitySet="unit">
+          <ScalarProperty Name="unit_id" ColumnName="unit_id" />
+          <ScalarProperty Name="unit_name" ColumnName="unit_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usages">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.usage">
+        <MappingFragment StoreEntitySet="usage">
+          <ScalarProperty Name="use_id" ColumnName="use_id" />
+          <ScalarProperty Name="use_date" ColumnName="use_date" />
+          <ScalarProperty Name="use_value" ColumnName="use_value" />
+          <ScalarProperty Name="use_minCounter" ColumnName="use_minCounter" />
+          <ScalarProperty Name="use_maxCounter" ColumnName="use_maxCounter" />
+          <ScalarProperty Name="con_id" ColumnName="con_id" />
+          <ScalarProperty Name="loc_id" ColumnName="loc_id" />
+          <ScalarProperty Name="dev_id" ColumnName="dev_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="versions">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.version">
+        <MappingFragment StoreEntitySet="version">
+          <ScalarProperty Name="vers_id" ColumnName="vers_id" />
+          <ScalarProperty Name="vers_number" ColumnName="vers_number" />
+          <ScalarProperty Name="vers_date" ColumnName="vers_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="view_dailyProduction">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.view_dailyProduction">
+        <MappingFragment StoreEntitySet="view_dailyProduction">
+          <ScalarProperty Name="PROD_DATE" ColumnName="PROD_DATE" />
+          <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
+          <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+          <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+          <ScalarProperty Name="ARTICLE" ColumnName="ARTICLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="view_dailyUsage">
+      <EntityTypeMapping TypeName="KTBDataManagerModel.view_dailyUsage">
+        <MappingFragment StoreEntitySet="view_dailyUsage">
+          <ScalarProperty Name="use_date" ColumnName="use_date" />
+          <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
+          <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+          <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+          <ScalarProperty Name="ARTICLE" ColumnName="ARTICLE" />
+          <ScalarProperty Name="DEVICE" ColumnName="DEVICE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="KTBDataManagerModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="KTBDataManagerModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="KTBDataManagerModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_GetConsumerCounterDifference" FunctionName="KTBDataManagerModel.Store.sp_GetConsumerCounterDifference">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KTBDataManagerModel.sp_GetConsumerCounterDifference_Result">
+          <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
+          <ScalarProperty Name="DEVICE" ColumnName="DEVICE" />
+          <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+          <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+          <ScalarProperty Name="USAGE" ColumnName="USAGE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_GetScaleCounterDifference" FunctionName="KTBDataManagerModel.Store.sp_GetScaleCounterDifference">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KTBDataManagerModel.sp_GetScaleCounterDifference_Result">
+          <ScalarProperty Name="LOCATION" ColumnName="LOCATION" />
+          <ScalarProperty Name="DEVICE" ColumnName="DEVICE" />
+          <ScalarProperty Name="ARTICLE" ColumnName="ARTICLE" />
+          <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+          <ScalarProperty Name="PRODUCTION" ColumnName="PRODUCTION" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="KTBDataManagerModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KTBDataManagerModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="KTBDataManagerModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KTBDataManagerModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="KTBDataManagerModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="KTBDataManagerModel.Store.sp_upgraddiagrams" />
+    <FunctionImportMapping FunctionImportName="spAddConsumerCounter" FunctionName="KTBDataManagerModel.Store.spAddConsumerCounter">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KTBDataManagerModel.spAddConsumerCounter_Result">
+          <ScalarProperty Name="cc_id" ColumnName="cc_id" />
+          <ScalarProperty Name="cc_processingDate" ColumnName="cc_processingDate" />
+          <ScalarProperty Name="cc_date" ColumnName="cc_date" />
+          <ScalarProperty Name="cc_source" ColumnName="cc_source" />
+          <ScalarProperty Name="cc_counterValue" ColumnName="cc_counterValue" />
+          <ScalarProperty Name="cc_sourceIndex" ColumnName="cc_sourceIndex" />
+          <ScalarProperty Name="con_id" ColumnName="con_id" />
+          <ScalarProperty Name="loc_id" ColumnName="loc_id" />
+          <ScalarProperty Name="dev_id" ColumnName="dev_id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spAddScaleCounter" FunctionName="KTBDataManagerModel.Store.spAddScaleCounter">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KTBDataManagerModel.spAddScaleCounter_Result">
+          <ScalarProperty Name="sc_id" ColumnName="sc_id" />
+          <ScalarProperty Name="sc_processingDate" ColumnName="sc_processingDate" />
+          <ScalarProperty Name="sc_date" ColumnName="sc_date" />
+          <ScalarProperty Name="sc_source" ColumnName="sc_source" />
+          <ScalarProperty Name="sc_counterValue" ColumnName="sc_counterValue" />
+          <ScalarProperty Name="sc_sourceIndex" ColumnName="sc_sourceIndex" />
+          <ScalarProperty Name="art_id" ColumnName="art_id" />
+          <ScalarProperty Name="loc_id" ColumnName="loc_id" />
+          <ScalarProperty Name="dev_id" ColumnName="dev_id" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetSingleConsumerCounter" FunctionName="KTBDataManagerModel.Store.spGetSingleConsumerCounter">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KTBDataManagerModel.spGetSingleConsumerCounter_Result">
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="COUNTER" ColumnName="COUNTER" />
+          <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+          <ScalarProperty Name="CONSUMPTION_TYPE" ColumnName="CONSUMPTION_TYPE" />
+          <ScalarProperty Name="SENDER" ColumnName="SENDER" />
+          <ScalarProperty Name="DEVICE" ColumnName="DEVICE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetSingleScaleCounter" FunctionName="KTBDataManagerModel.Store.spGetSingleScaleCounter">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KTBDataManagerModel.spGetSingleScaleCounter_Result">
+          <ScalarProperty Name="DATE" ColumnName="DATE" />
+          <ScalarProperty Name="CÒUNTER" ColumnName="CÒUNTER" />
+          <ScalarProperty Name="UNIT" ColumnName="UNIT" />
+          <ScalarProperty Name="ARTICLE" ColumnName="ARTICLE" />
+          <ScalarProperty Name="SENDER" ColumnName="SENDER" />
+          <ScalarProperty Name="DEVICE" ColumnName="DEVICE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spResetDatabase" FunctionName="KTBDataManagerModel.Store.spResetDatabase" />
+    <FunctionImportMapping FunctionImportName="spSetAliveToLocation" FunctionName="KTBDataManagerModel.Store.spSetAliveToLocation">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="KTBDataManagerModel.spSetAliveToLocation_Result">
+          <ScalarProperty Name="loc_id" ColumnName="loc_id" />
+          <ScalarProperty Name="loc_name" ColumnName="loc_name" />
+          <ScalarProperty Name="loc_active" ColumnName="loc_active" />
+          <ScalarProperty Name="loc_lastKeepAlive" ColumnName="loc_lastKeepAlive" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

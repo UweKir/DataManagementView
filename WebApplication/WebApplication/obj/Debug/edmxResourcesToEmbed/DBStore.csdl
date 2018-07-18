@@ -1,0 +1,559 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KTBDataManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="article">
+    <Key>
+      <PropertyRef Name="art_id" />
+    </Key>
+    <Property Name="art_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="art_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="unit_id" Type="Int32" />
+    <NavigationProperty Name="unit" Relationship="Self.FK_article_unit" FromRole="article" ToRole="unit" />
+    <NavigationProperty Name="production" Relationship="Self.FK_production_article" FromRole="article" ToRole="production" />
+    <NavigationProperty Name="scaleCounter" Relationship="Self.FK_scaleCounter_article" FromRole="article" ToRole="scaleCounter" />
+  </EntityType>
+  <EntityType Name="consumerCounter">
+    <Key>
+      <PropertyRef Name="cc_id" />
+    </Key>
+    <Property Name="cc_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cc_processingDate" Type="DateTime" Precision="3" />
+    <Property Name="cc_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="cc_source" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="cc_counterValue" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="cc_sourceIndex" Type="Int32" />
+    <Property Name="con_id" Type="Int32" />
+    <Property Name="loc_id" Type="Int32" />
+    <Property Name="dev_id" Type="Int32" />
+    <NavigationProperty Name="consumption" Relationship="Self.FK_consumerCounter_consumerCounter" FromRole="consumerCounter" ToRole="consumption" />
+    <NavigationProperty Name="device" Relationship="Self.FK_consumerCounter_device" FromRole="consumerCounter" ToRole="device" />
+    <NavigationProperty Name="location" Relationship="Self.FK_consumerCounter_location" FromRole="consumerCounter" ToRole="location" />
+  </EntityType>
+  <EntityType Name="consumption">
+    <Key>
+      <PropertyRef Name="con_id" />
+    </Key>
+    <Property Name="con_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="con_type" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="unit_id" Type="Int32" />
+    <NavigationProperty Name="consumerCounter" Relationship="Self.FK_consumerCounter_consumerCounter" FromRole="consumption" ToRole="consumerCounter" />
+    <NavigationProperty Name="unit" Relationship="Self.FK_consumption_unit" FromRole="consumption" ToRole="unit" />
+    <NavigationProperty Name="usage" Relationship="Self.FK_Usage_consumption" FromRole="consumption" ToRole="usage" />
+  </EntityType>
+  <EntityType Name="device">
+    <Key>
+      <PropertyRef Name="dev_id" />
+    </Key>
+    <Property Name="dev_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dev_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="consumerCounter" Relationship="Self.FK_consumerCounter_device" FromRole="device" ToRole="consumerCounter" />
+    <NavigationProperty Name="production" Relationship="Self.FK_production_device" FromRole="device" ToRole="production" />
+    <NavigationProperty Name="scaleCounter" Relationship="Self.FK_scaleCounter_device" FromRole="device" ToRole="scaleCounter" />
+    <NavigationProperty Name="usage" Relationship="Self.FK_Usage_device" FromRole="device" ToRole="usage" />
+  </EntityType>
+  <EntityType Name="location">
+    <Key>
+      <PropertyRef Name="loc_id" />
+    </Key>
+    <Property Name="loc_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="loc_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="loc_active" Type="Boolean" Nullable="false" />
+    <Property Name="loc_lastKeepAlive" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="consumerCounter" Relationship="Self.FK_consumerCounter_location" FromRole="location" ToRole="consumerCounter" />
+    <NavigationProperty Name="production" Relationship="Self.FK_production_location" FromRole="location" ToRole="production" />
+    <NavigationProperty Name="scaleCounter" Relationship="Self.FK_scaleCounter_location" FromRole="location" ToRole="scaleCounter" />
+    <NavigationProperty Name="usage" Relationship="Self.FK_Usage_location" FromRole="location" ToRole="usage" />
+  </EntityType>
+  <EntityType Name="production">
+    <Key>
+      <PropertyRef Name="prod_id" />
+    </Key>
+    <Property Name="prod_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="prod_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="prod_value" Type="Decimal" Precision="19" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="prod_minCounter" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="prod_maxCounter" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="art_id" Type="Int32" Nullable="false" />
+    <Property Name="loc_id" Type="Int32" Nullable="false" />
+    <Property Name="dev_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="article" Relationship="Self.FK_production_article" FromRole="production" ToRole="article" />
+    <NavigationProperty Name="device" Relationship="Self.FK_production_device" FromRole="production" ToRole="device" />
+    <NavigationProperty Name="location" Relationship="Self.FK_production_location" FromRole="production" ToRole="location" />
+  </EntityType>
+  <EntityType Name="scaleCounter">
+    <Key>
+      <PropertyRef Name="sc_id" />
+    </Key>
+    <Property Name="sc_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="sc_processingDate" Type="DateTime" Precision="3" />
+    <Property Name="sc_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="sc_source" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="sc_counterValue" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="sc_sourceIndex" Type="Int32" />
+    <Property Name="art_id" Type="Int32" />
+    <Property Name="loc_id" Type="Int32" />
+    <Property Name="dev_id" Type="Int32" />
+    <NavigationProperty Name="article" Relationship="Self.FK_scaleCounter_article" FromRole="scaleCounter" ToRole="article" />
+    <NavigationProperty Name="device" Relationship="Self.FK_scaleCounter_device" FromRole="scaleCounter" ToRole="device" />
+    <NavigationProperty Name="location" Relationship="Self.FK_scaleCounter_location" FromRole="scaleCounter" ToRole="location" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="unit">
+    <Key>
+      <PropertyRef Name="unit_id" />
+    </Key>
+    <Property Name="unit_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="unit_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="article" Relationship="Self.FK_article_unit" FromRole="unit" ToRole="article" />
+    <NavigationProperty Name="consumption" Relationship="Self.FK_consumption_unit" FromRole="unit" ToRole="consumption" />
+  </EntityType>
+  <EntityType Name="usage">
+    <Key>
+      <PropertyRef Name="use_id" />
+    </Key>
+    <Property Name="use_id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="use_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="use_value" Type="Decimal" Precision="19" Scale="2" annotation:StoreGeneratedPattern="Computed" />
+    <Property Name="use_minCounter" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="use_maxCounter" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="con_id" Type="Int32" Nullable="false" />
+    <Property Name="loc_id" Type="Int32" Nullable="false" />
+    <Property Name="dev_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="consumption" Relationship="Self.FK_Usage_consumption" FromRole="usage" ToRole="consumption" />
+    <NavigationProperty Name="device" Relationship="Self.FK_Usage_device" FromRole="usage" ToRole="device" />
+    <NavigationProperty Name="location" Relationship="Self.FK_Usage_location" FromRole="usage" ToRole="location" />
+  </EntityType>
+  <EntityType Name="version">
+    <Key>
+      <PropertyRef Name="vers_id" />
+    </Key>
+    <Property Name="vers_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="vers_number" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="vers_date" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <EntityType Name="view_dailyProduction">
+    <Key>
+      <PropertyRef Name="PROD_DATE" />
+      <PropertyRef Name="LOCATION" />
+    </Key>
+    <Property Name="PROD_DATE" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="LOCATION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VALUE" Type="Decimal" Precision="19" Scale="2" />
+    <Property Name="UNIT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ARTICLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="view_dailyUsage">
+    <Key>
+      <PropertyRef Name="use_date" />
+      <PropertyRef Name="LOCATION" />
+    </Key>
+    <Property Name="use_date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="LOCATION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="VALUE" Type="Decimal" Precision="19" Scale="2" />
+    <Property Name="UNIT" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ARTICLE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="DEVICE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_article_unit">
+    <End Role="unit" Type="Self.unit" Multiplicity="0..1" />
+    <End Role="article" Type="Self.article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="unit">
+        <PropertyRef Name="unit_id" />
+      </Principal>
+      <Dependent Role="article">
+        <PropertyRef Name="unit_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_production_article">
+    <End Role="article" Type="Self.article" Multiplicity="1" />
+    <End Role="production" Type="Self.production" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="article">
+        <PropertyRef Name="art_id" />
+      </Principal>
+      <Dependent Role="production">
+        <PropertyRef Name="art_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_scaleCounter_article">
+    <End Role="article" Type="Self.article" Multiplicity="0..1" />
+    <End Role="scaleCounter" Type="Self.scaleCounter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="article">
+        <PropertyRef Name="art_id" />
+      </Principal>
+      <Dependent Role="scaleCounter">
+        <PropertyRef Name="art_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_consumerCounter_consumerCounter">
+    <End Role="consumption" Type="Self.consumption" Multiplicity="0..1" />
+    <End Role="consumerCounter" Type="Self.consumerCounter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="consumption">
+        <PropertyRef Name="con_id" />
+      </Principal>
+      <Dependent Role="consumerCounter">
+        <PropertyRef Name="con_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_consumerCounter_device">
+    <End Role="device" Type="Self.device" Multiplicity="0..1" />
+    <End Role="consumerCounter" Type="Self.consumerCounter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="device">
+        <PropertyRef Name="dev_id" />
+      </Principal>
+      <Dependent Role="consumerCounter">
+        <PropertyRef Name="dev_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_consumerCounter_location">
+    <End Role="location" Type="Self.location" Multiplicity="0..1" />
+    <End Role="consumerCounter" Type="Self.consumerCounter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="location">
+        <PropertyRef Name="loc_id" />
+      </Principal>
+      <Dependent Role="consumerCounter">
+        <PropertyRef Name="loc_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_consumption_unit">
+    <End Role="unit" Type="Self.unit" Multiplicity="0..1" />
+    <End Role="consumption" Type="Self.consumption" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="unit">
+        <PropertyRef Name="unit_id" />
+      </Principal>
+      <Dependent Role="consumption">
+        <PropertyRef Name="unit_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usage_consumption">
+    <End Role="consumption" Type="Self.consumption" Multiplicity="1" />
+    <End Role="usage" Type="Self.usage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="consumption">
+        <PropertyRef Name="con_id" />
+      </Principal>
+      <Dependent Role="usage">
+        <PropertyRef Name="con_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_production_device">
+    <End Role="device" Type="Self.device" Multiplicity="1" />
+    <End Role="production" Type="Self.production" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="device">
+        <PropertyRef Name="dev_id" />
+      </Principal>
+      <Dependent Role="production">
+        <PropertyRef Name="dev_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_scaleCounter_device">
+    <End Role="device" Type="Self.device" Multiplicity="0..1" />
+    <End Role="scaleCounter" Type="Self.scaleCounter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="device">
+        <PropertyRef Name="dev_id" />
+      </Principal>
+      <Dependent Role="scaleCounter">
+        <PropertyRef Name="dev_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usage_device">
+    <End Role="device" Type="Self.device" Multiplicity="1" />
+    <End Role="usage" Type="Self.usage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="device">
+        <PropertyRef Name="dev_id" />
+      </Principal>
+      <Dependent Role="usage">
+        <PropertyRef Name="dev_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_production_location">
+    <End Role="location" Type="Self.location" Multiplicity="1" />
+    <End Role="production" Type="Self.production" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="location">
+        <PropertyRef Name="loc_id" />
+      </Principal>
+      <Dependent Role="production">
+        <PropertyRef Name="loc_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_scaleCounter_location">
+    <End Role="location" Type="Self.location" Multiplicity="0..1" />
+    <End Role="scaleCounter" Type="Self.scaleCounter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="location">
+        <PropertyRef Name="loc_id" />
+      </Principal>
+      <Dependent Role="scaleCounter">
+        <PropertyRef Name="loc_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usage_location">
+    <End Role="location" Type="Self.location" Multiplicity="1" />
+    <End Role="usage" Type="Self.usage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="location">
+        <PropertyRef Name="loc_id" />
+      </Principal>
+      <Dependent Role="usage">
+        <PropertyRef Name="loc_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KTBDataManagerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="article" EntityType="Self.article" />
+    <EntitySet Name="consumerCounter" EntityType="Self.consumerCounter" />
+    <EntitySet Name="consumption" EntityType="Self.consumption" />
+    <EntitySet Name="device" EntityType="Self.device" />
+    <EntitySet Name="location" EntityType="Self.location" />
+    <EntitySet Name="production" EntityType="Self.production" />
+    <EntitySet Name="scaleCounter" EntityType="Self.scaleCounter" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="unit" EntityType="Self.unit" />
+    <EntitySet Name="usage" EntityType="Self.usage" />
+    <EntitySet Name="version" EntityType="Self.version" />
+    <EntitySet Name="view_dailyProduction" EntityType="Self.view_dailyProduction" />
+    <EntitySet Name="view_dailyUsage" EntityType="Self.view_dailyUsage" />
+    <AssociationSet Name="FK_article_unit" Association="Self.FK_article_unit">
+      <End Role="unit" EntitySet="unit" />
+      <End Role="article" EntitySet="article" />
+    </AssociationSet>
+    <AssociationSet Name="FK_production_article" Association="Self.FK_production_article">
+      <End Role="article" EntitySet="article" />
+      <End Role="production" EntitySet="production" />
+    </AssociationSet>
+    <AssociationSet Name="FK_scaleCounter_article" Association="Self.FK_scaleCounter_article">
+      <End Role="article" EntitySet="article" />
+      <End Role="scaleCounter" EntitySet="scaleCounter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_consumerCounter_consumerCounter" Association="Self.FK_consumerCounter_consumerCounter">
+      <End Role="consumption" EntitySet="consumption" />
+      <End Role="consumerCounter" EntitySet="consumerCounter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_consumerCounter_device" Association="Self.FK_consumerCounter_device">
+      <End Role="device" EntitySet="device" />
+      <End Role="consumerCounter" EntitySet="consumerCounter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_consumerCounter_location" Association="Self.FK_consumerCounter_location">
+      <End Role="location" EntitySet="location" />
+      <End Role="consumerCounter" EntitySet="consumerCounter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_consumption_unit" Association="Self.FK_consumption_unit">
+      <End Role="unit" EntitySet="unit" />
+      <End Role="consumption" EntitySet="consumption" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usage_consumption" Association="Self.FK_Usage_consumption">
+      <End Role="consumption" EntitySet="consumption" />
+      <End Role="usage" EntitySet="usage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_production_device" Association="Self.FK_production_device">
+      <End Role="device" EntitySet="device" />
+      <End Role="production" EntitySet="production" />
+    </AssociationSet>
+    <AssociationSet Name="FK_scaleCounter_device" Association="Self.FK_scaleCounter_device">
+      <End Role="device" EntitySet="device" />
+      <End Role="scaleCounter" EntitySet="scaleCounter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usage_device" Association="Self.FK_Usage_device">
+      <End Role="device" EntitySet="device" />
+      <End Role="usage" EntitySet="usage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_production_location" Association="Self.FK_production_location">
+      <End Role="location" EntitySet="location" />
+      <End Role="production" EntitySet="production" />
+    </AssociationSet>
+    <AssociationSet Name="FK_scaleCounter_location" Association="Self.FK_scaleCounter_location">
+      <End Role="location" EntitySet="location" />
+      <End Role="scaleCounter" EntitySet="scaleCounter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usage_location" Association="Self.FK_Usage_location">
+      <End Role="location" EntitySet="location" />
+      <End Role="usage" EntitySet="usage" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_GetConsumerCounterDifference" ReturnType="Collection(KTBDataManagerModel.sp_GetConsumerCounterDifference_Result)">
+      <Parameter Name="DATE_BEGIN" Mode="In" Type="DateTime" />
+      <Parameter Name="DATE_END" Mode="In" Type="DateTime" />
+      <Parameter Name="LOCATION_NAME" Mode="In" Type="String" />
+      <Parameter Name="DEVICE_NAME" Mode="In" Type="String" />
+      <Parameter Name="CONSUMPTION_TYPE" Mode="In" Type="String" />
+      <Parameter Name="UNIT_NAME" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_GetScaleCounterDifference" ReturnType="Collection(KTBDataManagerModel.sp_GetScaleCounterDifference_Result)">
+      <Parameter Name="DATE_BEGIN" Mode="In" Type="DateTime" />
+      <Parameter Name="DATE_END" Mode="In" Type="DateTime" />
+      <Parameter Name="LOCATION_NAME" Mode="In" Type="String" />
+      <Parameter Name="DEVICE_NAME" Mode="In" Type="String" />
+      <Parameter Name="ARTICLE_NAME" Mode="In" Type="String" />
+      <Parameter Name="UNIT_NAME" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(KTBDataManagerModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(KTBDataManagerModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <FunctionImport Name="spAddConsumerCounter" ReturnType="Collection(KTBDataManagerModel.spAddConsumerCounter_Result)">
+      <Parameter Name="PROCESSING_DATE" Mode="In" Type="DateTime" />
+      <Parameter Name="DATE" Mode="In" Type="DateTime" />
+      <Parameter Name="COUNTER_VALUE" Mode="In" Type="Decimal" />
+      <Parameter Name="LOCATION_NAME" Mode="In" Type="String" />
+      <Parameter Name="UNIT_NAME" Mode="In" Type="String" />
+      <Parameter Name="CONSUMPTION_TYPE_NAME" Mode="In" Type="String" />
+      <Parameter Name="DEVICE_NAME" Mode="In" Type="String" />
+      <Parameter Name="SOURCE" Mode="In" Type="String" />
+      <Parameter Name="SOURCE_INDEX" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spAddScaleCounter" ReturnType="Collection(KTBDataManagerModel.spAddScaleCounter_Result)">
+      <Parameter Name="PROCESSING_DATE" Mode="In" Type="DateTime" />
+      <Parameter Name="DATE" Mode="In" Type="DateTime" />
+      <Parameter Name="COUNTER_VALUE" Mode="In" Type="Decimal" />
+      <Parameter Name="LOCATION_NAME" Mode="In" Type="String" />
+      <Parameter Name="UNIT_NAME" Mode="In" Type="String" />
+      <Parameter Name="ARTICLE_NAME" Mode="In" Type="String" />
+      <Parameter Name="DEVICE_NAME" Mode="In" Type="String" />
+      <Parameter Name="SOURCE" Mode="In" Type="String" />
+      <Parameter Name="SOURCE_INDEX" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spGetSingleConsumerCounter" ReturnType="Collection(KTBDataManagerModel.spGetSingleConsumerCounter_Result)">
+      <Parameter Name="DATE" Mode="In" Type="DateTime" />
+      <Parameter Name="CONSUMPTION_TYPE_NAME" Mode="In" Type="String" />
+      <Parameter Name="UNIT_NAME" Mode="In" Type="String" />
+      <Parameter Name="DEVICE_NAME" Mode="In" Type="String" />
+      <Parameter Name="LOCATION_NAME" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spGetSingleScaleCounter" ReturnType="Collection(KTBDataManagerModel.spGetSingleScaleCounter_Result)">
+      <Parameter Name="DATE" Mode="In" Type="DateTime" />
+      <Parameter Name="ARTICLE_NAME" Mode="In" Type="String" />
+      <Parameter Name="UNIT_NAME" Mode="In" Type="String" />
+      <Parameter Name="DEVICE_NAME" Mode="In" Type="String" />
+      <Parameter Name="LOCATION_NAME" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spResetDatabase" />
+    <FunctionImport Name="spSetAliveToLocation" ReturnType="Collection(KTBDataManagerModel.spSetAliveToLocation_Result)">
+      <Parameter Name="LOCATION_NAME" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_GetConsumerCounterDifference_Result">
+    <Property Type="String" Name="LOCATION" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="DEVICE" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="TYPE" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="UNIT" Nullable="true" MaxLength="20" />
+    <Property Type="Decimal" Name="USAGE" Nullable="true" Precision="19" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="sp_GetScaleCounterDifference_Result">
+    <Property Type="String" Name="LOCATION" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="DEVICE" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="ARTICLE" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="UNIT" Nullable="true" MaxLength="20" />
+    <Property Type="Decimal" Name="PRODUCTION" Nullable="true" Precision="19" Scale="2" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="spAddConsumerCounter_Result">
+    <Property Type="Int64" Name="cc_id" Nullable="false" />
+    <Property Type="DateTime" Name="cc_processingDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="cc_date" Nullable="false" Precision="23" />
+    <Property Type="String" Name="cc_source" Nullable="true" MaxLength="150" />
+    <Property Type="Decimal" Name="cc_counterValue" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="cc_sourceIndex" Nullable="true" />
+    <Property Type="Int32" Name="con_id" Nullable="true" />
+    <Property Type="Int32" Name="loc_id" Nullable="true" />
+    <Property Type="Int32" Name="dev_id" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="spAddScaleCounter_Result">
+    <Property Type="Int64" Name="sc_id" Nullable="false" />
+    <Property Type="DateTime" Name="sc_processingDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="sc_date" Nullable="false" Precision="23" />
+    <Property Type="String" Name="sc_source" Nullable="true" MaxLength="150" />
+    <Property Type="Decimal" Name="sc_counterValue" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="sc_sourceIndex" Nullable="true" />
+    <Property Type="Int32" Name="art_id" Nullable="true" />
+    <Property Type="Int32" Name="loc_id" Nullable="true" />
+    <Property Type="Int32" Name="dev_id" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="spGetSingleConsumerCounter_Result">
+    <Property Type="DateTime" Name="DATE" Nullable="false" Precision="23" />
+    <Property Type="Decimal" Name="COUNTER" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="String" Name="UNIT" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="CONSUMPTION_TYPE" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="SENDER" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="DEVICE" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="spGetSingleScaleCounter_Result">
+    <Property Type="DateTime" Name="DATE" Nullable="false" Precision="23" />
+    <Property Type="Decimal" Name="CÒUNTER" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="String" Name="UNIT" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="ARTICLE" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SENDER" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="DEVICE" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="spSetAliveToLocation_Result">
+    <Property Type="Int32" Name="loc_id" Nullable="false" />
+    <Property Type="String" Name="loc_name" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="loc_active" Nullable="false" />
+    <Property Type="DateTime" Name="loc_lastKeepAlive" Nullable="true" Precision="23" />
+  </ComplexType>
+</Schema>

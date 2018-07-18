@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="Default Web Site/DataManagementWebApp" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\DevSource\\DataManagementView\\DataManagementWebApp\\DataManagementWebApp\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^D:\\DevSource\\DataManagementView\\DataManagementWebApp\\DataManagementWebApp\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="Data Source=UWE-PC\SQLEXPRESS;Initial Catalog=KTBDataManager;User ID=sa;Password=uwe" tags="">
+    <parameterEntry kind="XmlFile" scope="D:\\DevSource\\DataManagementView\\DataManagementWebApp\\DataManagementWebApp\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="KTBDataManagerEntities-Web.config Connection String" description="" value="metadata=res://*/DataStore.csdl|res://*/DataStore.ssdl|res://*/DataStore.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=UWE-PC\SQLEXPRESS;Initial Catalog=KTBDataManager;User ID=sa;Password=uwe&quot;" tags="">
+    <parameterEntry kind="XmlFile" scope="D:\\DevSource\\DataManagementView\\DataManagementWebApp\\DataManagementWebApp\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='KTBDataManagerEntities']/@connectionString" />
+  </parameter>
+</parameters>

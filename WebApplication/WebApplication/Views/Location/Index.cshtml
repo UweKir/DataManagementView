@@ -1,0 +1,97 @@
+﻿
+@model WebApplication.Models.LocationModel
+@{
+    ViewBag.Title = "Location";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h2>Produktionsorte</h2>
+</div>
+<div class="container">
+    <div class="row">
+        <!--http://maps.google.com/maps?hl=en&amp;ie=UTF8&amp;ll=37.0625,-95.677068&amp;spn=56.506174,79.013672&amp;t=m&amp;z=4&amp;output=embed  -->
+        
+            <div class="col-sm-6" id="map" style="width: 400px; height: 300px;"></div>
+            <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyByzPm6lUSpRVYnzGHqHBbO6Bsa1z6CaOE"
+                    type="text/javascript"></script>
+            <script type="text/javascript">
+                var locations = [
+                    ['Sülm', 49.9219977, 6.573903100000052, 1],
+                    ['DE-54634 Bitburg', 49.966415, 6.52986, 2]
+                ];
+
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 10,
+                    center: new google.maps.LatLng(49.9, 6.5),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+
+                var infowindow = new google.maps.InfoWindow();
+
+                var marker, i;
+
+                for (i = 0; i < locations.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                        map: map
+                    });
+
+                 
+                    iconFile = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+                    
+                    
+                    marker.setIcon(iconFile);
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent(locations[i][0]);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+                }
+            </script>
+            <div class="col-sm-6">
+                
+                    <table id="grid">
+                        <colgroup>
+                            <col />
+                            <col />
+                            <col style="width:100px" />
+                            <col style="width:60px" />
+                            <col style="width:130px" />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th data-field="article">Ort</th>
+                                <th data-field="amount">Online</th>
+                                <th data-field="unit">Letzte Meldung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var row in Model.LstLocations)
+                            {
+
+                                <tr>
+                                    <td>@row.Name</td>
+                                    <td>@row.Online</td>
+                                    <td>@row.LastAlive</td>
+                                </tr>
+                            }
+
+
+                        </tbody>
+                    </table>
+
+                    <script>
+                        $(document).ready(function () {
+                            $("#grid").kendoGrid({
+                                sortable: true
+                               
+
+                            });
+                        });
+                    </script>
+                </div>
+    </div>
+</div>
