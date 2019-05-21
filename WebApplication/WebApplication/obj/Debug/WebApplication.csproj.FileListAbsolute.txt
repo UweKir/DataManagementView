@@ -257,7 +257,6 @@ D:\KTB Development\DataManagementView\WebApplication\WebApplication\bin\de\Entit
 D:\KTB Development\DataManagementView\WebApplication\WebApplication\bin\de\Microsoft.AspNet.Identity.Core.resources.dll
 D:\KTB Development\DataManagementView\WebApplication\WebApplication\bin\de\Microsoft.AspNet.Identity.Owin.resources.dll
 D:\KTB Development\DataManagementView\WebApplication\WebApplication\bin\de\Microsoft.AspNet.Identity.EntityFramework.resources.dll
-D:\KTB Development\DataManagementView\WebApplication\WebApplication\obj\Debug\WebApplication.csprojAssemblyReference.cache
 D:\KTB Development\DataManagementView\WebApplication\WebApplication\obj\Debug\WebApplication.csproj.CoreCompileInputs.cache
 D:\KTB Development\DataManagementView\WebApplication\WebApplication\obj\Debug\WebApplication.csproj.CopyComplete
 D:\KTB Development\DataManagementView\WebApplication\WebApplication\obj\Debug\WebApplication.dll

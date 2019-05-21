@@ -12,9 +12,13 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
 
+            var date = DateTime.Now.Date.Add(new TimeSpan(0, 0, 0));
+
 
             DateTime beginDate = DateTime.Parse("2018-04-02");
-            DateTime endDate = DateTime.Parse("2019-06-25");
+            beginDate = beginDate.Date.Add(new TimeSpan(0, 0, 0));
+            DateTime endDate = DateTime.Parse("2018-04-25");
+            endDate = endDate.Date.Add(new TimeSpan(24, 59, 59));
 
             List<WebApplication.Models.UsageDetail> lstUsage = new List<WebApplication.Models.UsageDetail>();
 
@@ -24,7 +28,11 @@ namespace ConsoleApp1
 
                 foreach(var g in s)
                 {
-                    lstUsage.Add(new WebApplication.Models.UsageDetail() { Device = g.DEVICE, Value = (Decimal)g.USAGE });
+                    lstUsage.Add(new WebApplication.Models.UsageDetail() { Device = g.DEVICE,
+                                                                           Value = (Decimal)g.USAGE,
+                                                                           Location = g.LOCATION,
+                                                                           Unit = g.UNIT
+                                                                         });
                    
                 }
 

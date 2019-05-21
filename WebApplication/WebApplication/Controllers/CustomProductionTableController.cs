@@ -67,13 +67,17 @@ namespace WebApplication.Controllers
 
             }
 
+            // from 0.00 to 24.59
+            dtStart = dtStart.Date.Add(new TimeSpan(0, 0, 0));
+            dtEnd = dtEnd.Date.Add(new TimeSpan(24, 59, 59));
+
             // first load the data from DB
             using (KTBDataManagerEntities context = new KTBDataManagerEntities())
             {
                 var prodTime = from p in context.view_dailyProduction
                                where p.UNIT.ToLower() == "h"
-                                      && p.PROD_DATE >= dtStart.Date 
-                                      && p.PROD_DATE <= dtEnd.Date
+                                      && p.PROD_DATE >= dtStart
+                                      && p.PROD_DATE <= dtEnd
                                group p by new { p.UNIT } into g
                                select new
                                {
@@ -88,8 +92,8 @@ namespace WebApplication.Controllers
 
                 var prodTons = from p in context.view_dailyProduction
                                where p.UNIT.ToLower() == "t"
-                                     && p.PROD_DATE >= dtStart.Date 
-                                     && p.PROD_DATE <= dtEnd.Date
+                                     && p.PROD_DATE >= dtStart
+                                     && p.PROD_DATE <= dtEnd
                                group p by new { p.ARTICLE } into g
                                select new
                                {

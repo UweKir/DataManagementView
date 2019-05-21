@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using WebApplication.Models;
 
@@ -25,7 +23,7 @@ namespace WebApplication.Controllers
 
             if (!String.IsNullOrEmpty(startDate))
             {
-                dtStart = DateTime.ParseExact(startDate,
+                 dtStart = DateTime.ParseExact(startDate,
                  General.DateTimeFormat,
                  System.Globalization.CultureInfo.InvariantCulture);
 
@@ -36,42 +34,36 @@ namespace WebApplication.Controllers
                  dtEnd = DateTime.ParseExact(endDate,
                  General.DateTimeFormat,
                  System.Globalization.CultureInfo.InvariantCulture);
+                
 
             }
+
+            // from 0.00 to 24.59
+            dtStart = dtStart.Date.Add(new TimeSpan(0, 0, 0));
+            dtEnd = dtEnd.Date.Add(new TimeSpan(24, 59, 59));
+
 
             List<WebApplication.Models.UsageDetail> lstUsage = new List<WebApplication.Models.UsageDetail>();
 
             using (KTBDataManagerEntities context = new KTBDataManagerEntities())
             {
-                var prodTons = from p in context.view_dailyUsage
-                               where p.use_date >= dtStart.Date && p.use_date <= dtEnd.Date
-                               group p by new { p.DEVICE } into g
-                               select new
-                               {
-                                   Unit = g.Key.DEVICE,
-                                   Value = g.Sum(p => p.VALUE)
+             
+                   var lstQuery = context.sp_GetConsumerCounterDifference(dtStart, dtEnd, "", "", "", "");
 
-                               };
-                /*
-                select new
-                               {
+                    foreach (var usage in lstQuery)
+                    {
+                        lstUsage.Add(new WebApplication.Models.UsageDetail() { Device = usage.DEVICE,
+                                                                               Value = (Decimal)usage.USAGE,
+                                                                               Location = usage.LOCATION,
+                                                                               Unit = usage.UNIT,
+                                                                               Name = usage.TYPE
+                                                                              });
 
-                                   Unit = p.UNIT,
-                                   Value = p.VALUE,
-                                   Location = p.LOCATION,
-                                   Device = p.DEVICE
-
-                               };*/
-
-                foreach (var prod in prodTons)
-                {
-                    lstUsage.Add(new WebApplication.Models.UsageDetail() { Device = prod.Unit, Value = (Decimal)prod.Value });
-
-                }
+                    }
+                    
             }
 
             return Json(lstUsage, JsonRequestBehavior.AllowGet);
-
         }
     }
 }

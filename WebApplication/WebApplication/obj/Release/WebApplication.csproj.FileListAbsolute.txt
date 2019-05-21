@@ -260,4 +260,3 @@ D:\KTB Development\DataManagementView\WebApplication\WebApplication\obj\Release\
 D:\KTB Development\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.csproj.CopyComplete
 D:\KTB Development\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.dll
 D:\KTB Development\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.pdb
-D:\KTB Development\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.csprojAssemblyReference.cache
