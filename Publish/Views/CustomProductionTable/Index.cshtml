@@ -1,0 +1,198 @@
+﻿@{
+    ViewBag.Title = "Produktion Edelsplitt";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Produktion Edelsplitt</h1>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-2">
+            <input id="datepicker" title="datepicker" style="width: 100%" />
+        </div>
+        <div class="col-sm-2">
+            <input id="datepicker2" title="datepicker2" style="width: 100%" />
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-primary btn-lg" id="loadButton">Laden</button>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+
+
+            $("#loadButton").kendoButton({
+                click: function (e) {
+                    //alert(e.event.target.tagName);
+                    //alert($("#datepicker").data("kendoDatePicker").value());
+
+                    //$("#grid").data("kendoGrid").dataSource.read();
+                    initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value() );
+
+                    //$.ajax({
+                    //    url: "/DayProduction/",
+                    //    data: { selectedDate: $("#datepicker").data("kendoDatePicker").value() },
+                    //    error: function () {
+                    //        //Handle the server errors using the approach from the previous example
+                    //    },
+                    //    success: function (results) {
+                    //        if (results != null) {
+                    //            //alert(results)
+                    //        }
+                    //    }
+                    //});
+
+                }
+            });
+
+            $("#datepicker").kendoDatePicker({
+                change: function () {
+                    var value = this.value();
+
+                }
+                , value: new Date()
+            });
+
+            $("#datepicker2").kendoDatePicker({
+                change: function () {
+                    var value = this.value();
+
+                }
+                , value: new Date()
+            });
+
+        });
+    </script>
+    <div class="row"><p></p></div>
+    <div id="grid"></div>
+    <script>
+
+        $(document).ready(function () {
+            initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value());
+        });
+        /*
+        $(document).ready(function () {
+            initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value());
+        });
+        */
+
+        function initializeGrid(startDate, endDate) {
+
+            if (endDate < startDate) {
+
+                $.when(kendo.ui.ExtOkCancelDialog.show({
+                    title: "OK/Cancel",
+                    message: "This is a sample ok/cancel box",
+                    icon: "k-ext-question"
+                })
+                ).done(function (response) {
+                    console.log(kendo.format("{0} button clicked",
+                        response.button));
+                });
+
+                return;
+
+            }
+
+            $("#grid").html("");
+            $("#grid").kendoGrid({
+
+                toolbar: ["excel"],
+                excel: {
+                    fileName: "Produktion_" + kendo.toString(startDate, "yyyy-MM-dd") + "_" + kendo.toString(endDate, "yyyy-MM-dd")  + ".xlsx",
+                    filterable: true
+                },
+                dataSource: {
+                    transport: {
+                        read: "/CustomProductionTable/GetCustomProductionTableData?startDate=" + kendo.toString(startDate, "yyyy-MM-dd HH:mm:ss") + "&endDate=" + kendo.toString(endDate, "yyyy-MM-dd HH:mm:ss"),
+                        dataType: "json"
+                    },
+                    schema: {
+                        model: {
+                            id: "Name",
+                            fields: {
+                                Group: { type: "string" },
+                                Name: { type: "string" },
+                                Tons: { type: "number" },
+                                Runtime: { type: "number" },
+                                TonsInHour: { type: "number" }
+                            }
+                        }
+                    },
+                    pageSize: 15,
+                    group: [
+                        {
+                            field: "Group",
+                            aggregates: [
+                                { field: "Tons", aggregate: "sum" },
+                                { field: "TonsInHour", aggregate: "sum"}
+                            ]
+                        }
+                    ], // set grouping for the dataSource
+                    aggregate: [{ field: "Tons", aggregate: "sum" }, { field: "TonsInHour", aggregate: "sum" }]
+                    //serverPaging: true,
+                    //serverFiltering: true,
+                    //serverSorting: true
+                },
+                height: 800,
+                filterable: true,
+                pageable: true,
+                columns: [
+                    {
+                        hidden: true,
+                        field: "Group",
+                        title: "Tabelle",
+                        width: "20%",
+                        filterable: true
+                    },
+                    {
+                        field: "Name",
+                        title: "Material/Art",
+                        width: "30%",
+                        filterable: true
+                    },
+                    {
+                        field: "Tons",
+                        title: "Tonnen",
+                        width: "20%",
+                        attributes: { style: "text-align:right;" },
+                        format: "{0:0.00}",
+                        aggregates: ["sum"],
+                        groupFooterTemplate: function (e) {
+                            return kendo.toString(e.Tons.sum, "n2") + " t";
+                        }
+
+                    },
+                    {
+                        field: "Runtime",
+                        title: "Laufzeit",
+                        width: "20%",
+                        attributes: { style: "text-align:right;" },
+                        format: "{0:0.00}"
+                       // aggregates: ["max"],
+                       // groupFooterTemplate: function (e) {
+                        //    return "Total: " + kendo.toString(e.max, "n2");
+                       // }//"Total: #=sum#"
+
+                    },
+                    {
+                        field: "TonsInHour",
+                        title: "Tonnen/Std.",
+                        width: "20%",
+                        format: "{0:0.00}", 
+                        attributes: { style: "text-align:right;" },
+                        aggregates: ["sum"],
+                        groupFooterTemplate: function (e) {
+                            return kendo.toString(e.TonsInHour.sum, "n2");
+                        }
+                    },
+                ]
+
+            });
+        }
+    </script>
+
+
+</div>
+
