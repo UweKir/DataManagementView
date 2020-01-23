@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebApplication;
+using WebApplication.Controllers;
+using Newtonsoft.Json;
+using System.Web.Mvc;
 
 namespace ConsoleApp1
 {
@@ -11,6 +14,57 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            WebApplication.Controllers.HomeController c = new HomeController();
+            JsonResult res = c.GetDayCurrentProductionByUnit();
+        }
+
+        public static List<WebApplication.Models.ProductionDetail> getDayProductionList(DateTime day, String unit)
+        {
+            List<WebApplication.Models.ProductionDetail> lstProd = new List<WebApplication.Models.ProductionDetail>();
+
+            using (KTBDataManagerEntities context = new KTBDataManagerEntities())
+            {
+                var prodTime = from p in context.view_dailyProduction
+                               where p.UNIT.ToLower() == unit && p.PROD_DATE == day
+                               select new
+                               {
+                                   Unit = p.UNIT,
+                                   Value = p.VALUE,
+                                   ProdDate = p.PROD_DATE,
+                                   ArticleName = p.ARTICLE,
+                                   Location = p.LOCATION
+
+
+                               };
+                foreach (var item in prodTime)
+                {
+                    WebApplication.Models.ProductionDetail prod = new WebApplication.Models.ProductionDetail();
+                    prod.Unit = item.Unit;
+
+                    prod.Value = 0;
+
+                    if (item.Value.HasValue)
+                    {
+                        prod.Value = item.Value.Value;
+                    }
+
+                    prod.Name = item.ArticleName;
+                    prod.Location = item.Location;
+
+                    lstProd.Add(prod);
+
+                }
+            }
+
+            return lstProd;
+        }
+
+        public static void getDailyProductionAll()
+        {
+
+
+
+
             Decimal runTime = 0m;
 
             Decimal es16_22 = 0m;
@@ -34,17 +88,17 @@ namespace ConsoleApp1
             using (KTBDataManagerEntities context = new KTBDataManagerEntities())
             {
                 var prodTime = from p in context.view_dailyProduction
-                           where p.UNIT.ToLower() == "h"
-                           group p by new { p.UNIT } into g
-                           select new
-                           {
-                               Unit = g.Key.UNIT,
-                               Sum = g.Sum(p=>p.VALUE)
-                              
-                           };
+                               where p.UNIT.ToLower() == "h"
+                               group p by new { p.UNIT } into g
+                               select new
+                               {
+                                   Unit = g.Key.UNIT,
+                                   Sum = g.Sum(p => p.VALUE)
+
+                               };
                 foreach (var pt in prodTime)
                 {
-                    runTime = (Decimal) pt.Sum;
+                    runTime = (Decimal)pt.Sum;
                 }
 
                 var prodTons = from p in context.view_dailyProduction
@@ -60,7 +114,7 @@ namespace ConsoleApp1
                 {
                     Decimal v = (Decimal)art.Sum;
 
-                    switch(art.Article)
+                    switch (art.Article)
                     {
                         case "16/22":
                             es16_22 = v;
@@ -92,11 +146,11 @@ namespace ConsoleApp1
                             break;
                         default:
                             continue;
-                      
+
                     }
 
-                   
-                    
+
+
                 }
 
                 deponie = vorsieb - p40_100;
@@ -105,5 +159,6 @@ namespace ConsoleApp1
 
             }
         }
+
     }
 }

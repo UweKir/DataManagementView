@@ -31,17 +31,35 @@
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav mr-auto">
                     <li class="nav-item"><a href="/" class="nav-link">Start</a></li>
-                    <li class="nav-item"><a href="/DayProduction" class="nav-link">Tagesproduktion</a></li>
-                    <li class="nav-item"><a href="/DayUsage" class="nav-link">Tagesverbrauch</a></li>
-                    <li class="nav-item"><a href="/CustomProductionTable" class="nav-link">Produktionstabelle</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Produktion
+                        </a>
+                        <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+                            <a class="dropdown-item" href="/DayProduction">Tagesproduktion</a>
+                            <a class="dropdown-item" href="/CustomProductionTable">Produktionstabelle</a>
+                            <a class="dropdown-item" href="/CustomProductionCharts">Charts</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Verbrauch
+                        </a>
+                        <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
+                            <a class="dropdown-item" href="/DayUsage">Tagesverbrauch</a>
+                            <a class="dropdown-item" href="/DayUsageCharts">Charts</a>
+                        </div>
+                    </li>
                     <!-- li class="nav-item"><a href="/Home/About" class="nav-link">Über uns</a></li -->
                     <li class="nav-item"><a href="/Location" class="nav-link">Produktionsorte</a></li>
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right mr-auto">
+                <!--ul class="nav navbar-nav navbar-right mr-auto">
                     <li class="nav-item"><a href="/Account/Register" id="registerLink" class="nav-link">Register</a></li>
                     <li class="nav-item"><a href="/Account/Login" id="loginLink" class="nav-link">Log in</a></li>
-                </ul>
+                </ul -->
 
 
             </div>

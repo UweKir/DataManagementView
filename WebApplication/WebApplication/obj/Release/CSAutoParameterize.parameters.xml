@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Die in der Datei &amp;quot;web.config&amp;quot; festgelegte Verbindungszeichenfolge, die von der Anwendung für den Zugriff auf die Datenbank verwendet wird." defaultValue="Data Source=(LocalDb)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\aspnet-WebApplication-20180612112319.mdf;Initial Catalog=aspnet-WebApplication-20180612112319;Integrated Security=True" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="D:\\DevSource\\DataManagementView\\WebApplication\\WebApplication\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
-  </parameter>
-  <parameter name="KTBDataManagerEntities-Web.config Connection String" description="KTBDataManagerEntities Die in der Datei &amp;quot;web.config&amp;quot; festgelegte Verbindungszeichenfolge, die von der Anwendung für den Zugriff auf die Datenbank verwendet wird." defaultValue="metadata=res://*/DBStore.csdl|res://*/DBStore.ssdl|res://*/DBStore.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=localhost\SQLExpress;initial catalog=KTBDataManager;user id=sa;password=uwe;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="D:\\DevSource\\DataManagementView\\WebApplication\\WebApplication\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='KTBDataManagerEntities']/@connectionString" />
-  </parameter>
-</parameters>

@@ -1,3 +1,4 @@
+D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\EntityFramework.xml
 D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\ApplicationInsights.config
 D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\WebApplication.dll.config
 D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\WebApplication.dll
@@ -99,7 +100,6 @@ D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\System.Web.Web
 D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\System.Web.WebPages.Razor.xml
 D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\System.Web.Optimization.xml
 D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\Antlr3.Runtime.pdb
-D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\EntityFramework.xml
 D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\EntityFramework.SqlServer.xml
 D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\Microsoft.AspNet.Identity.Core.xml
 D:\DevSource\DataManagementView\WebApplication\WebApplication\bin\Microsoft.AspNet.Identity.Owin.xml
@@ -129,3 +129,4 @@ D:\DevSource\DataManagementView\WebApplication\WebApplication\obj\Release\WebApp
 D:\DevSource\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.csproj.CopyComplete
 D:\DevSource\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.dll
 D:\DevSource\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.pdb
+D:\DevSource\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.csprojAssemblyReference.cache

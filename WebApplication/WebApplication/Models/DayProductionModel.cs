@@ -30,5 +30,7 @@ namespace WebApplication.Models
 
         public decimal Value { get; set; }
 
+        public DateTime ProdDate { get; set; }
+
     }
 }

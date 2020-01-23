@@ -1,0 +1,175 @@
+﻿
+@{
+    ViewBag.Title = "CustomProductionChartsView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Produktion Edelsplitt Verlauf</h1>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-2">
+            <h4 style="margin-top: 1em;"><label for="size">Datum von:</label></h4>
+            <input id="datepicker" title="datepicker" style="width: 100%" />
+        </div>
+        <div class="col-sm-2">
+            <h4 style="margin-top: 1em;"><label for="size">Datum bis:</label></h4>
+            <input id="datepicker2" title="datepicker2" style="width: 100%" />
+        </div>
+        <div class="col-sm-2">
+            <h4 style="margin-top: 1em;"><label for="size">Auswahl Edelsplitt</label></h4>
+            <select id="size" placeholder="Edelspitt ausählen ..." style="width: 100%;">
+                <option>0/2</option>
+                <option>40/100</option>
+                <option>16/22</option>
+                <option>2/8</option>
+                <option>8/16</option>
+                <option>8/22</option>
+            </select>
+        </div>
+        <div class="col-sm-2">
+            <h4 style="margin-top: 1em;"><label for="size"></label></h4>
+            <button type="button" class="btn btn-primary btn-lg" id="loadButton">Laden</button>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+
+
+            $("#loadButton").kendoButton({
+                click: function (e) {
+
+                    initializeGrid();
+
+                    //initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value() );
+
+
+
+                }
+            });
+
+            $("#datepicker").kendoDatePicker({
+                change: function () {
+                    var value = this.value();
+
+                }
+                , value: new Date()
+            });
+
+            $("#datepicker2").kendoDatePicker({
+                change: function () {
+                    var value = this.value();
+
+                }
+                , value: new Date()
+            });
+
+            $("#size").kendoComboBox();
+
+            var fabric = $("#fabric").data("kendoComboBox");
+            var select = $("#size").data("kendoComboBox");
+
+
+            $("#get").click(function () {
+                alert('Thank you! Your Choice is:\n\nFabric ID: ' + fabric.value() + ' and Size: ' + select.value());
+            });
+
+        });
+    </script>
+    <div class="row"><p></p></div>
+    <div id="grid">
+        <script>
+            /*
+            $(document).ready(function () {
+                initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value());
+            });
+            */
+            /*
+            $(document).ready(function () {
+                initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value());
+            });
+            */
+
+            function initializeGrid() {
+
+
+                /*
+                    if (endDate < startDate) {
+
+                        $.when(kendo.ui.ExtOkCancelDialog.show({
+                            title: "OK/Cancel",
+                            message: "This is a sample ok/cancel box",
+                            icon: "k-ext-question"
+                        })
+                        ).done(function (response) {
+                            console.log(kendo.format("{0} button clicked",
+                                response.button));
+                        });
+
+                        return;
+
+                    }*/
+
+                $("#grid").kendoChart({
+
+                    title: {
+                        text: "Heutige Produktion (t)"
+                    },
+                    legend: {
+                        position: "top"
+                    },
+                    seriesDefaults: {
+                        type: "column",
+                        stack: true
+                    },
+
+                    dataSource: ({
+                        transport: {
+                            read: "/CustomProductionCharts/GetDayProductionList",
+                            dataType: "json"
+                        }
+                    }),
+
+                    series: [{
+                        type: "line",
+                        field: "Value",
+                        name: "Produktion Edelsplit"
+                    }],
+
+                    categoryAxis: {
+                        field: "ProdDate",
+                        type: "catagory",
+                        labels: {
+                               
+                            template: function (e) {
+                                var val = new Date(e.value);
+                                var label = kendo.toString(val, "dd.MM.yy");
+                                return label;
+                            }
+                        },
+                        title: {
+                            text: "Datum"
+                        }
+
+                        
+                    },
+
+                    tooltip: {
+                        visible: true,
+                        format: "{0} t"
+                    }
+
+                });
+
+            }
+
+            $(document).ready(initializeGrid);
+            $(document).bind("kendo:skinChange", initializeGrid);
+
+        </script>
+
+    </div>
+
+
+

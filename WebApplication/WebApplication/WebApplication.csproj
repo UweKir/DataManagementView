@@ -203,8 +203,10 @@
       <DependentUpon>DBStore.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CustomProductionChartsController.cs" />
     <Compile Include="Controllers\CustomProductionTableController.cs" />
     <Compile Include="Controllers\DayProductionController.cs" />
+    <Compile Include="Controllers\DayUsageChartsController.cs" />
     <Compile Include="Controllers\DayUsageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
@@ -288,6 +290,7 @@
     <Compile Include="version.cs">
       <DependentUpon>DBStore.tt</DependentUpon>
     </Compile>
+    <Compile Include="Views\CurrentProductionController.cs" />
     <Compile Include="view_dailyProduction.cs">
       <DependentUpon>DBStore.tt</DependentUpon>
     </Compile>
@@ -3466,6 +3469,8 @@
     <Content Include="Views\Location\Index.cshtml" />
     <Content Include="Views\DayUsage\Index.cshtml" />
     <Content Include="Views\CustomProductionTable\Index.cshtml" />
+    <Content Include="Views\CustomProductionCharts\Index.cshtml" />
+    <Content Include="Views\DayUsageCharts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
