@@ -19,14 +19,15 @@
         </div>
         <div class="col-sm-2">
             <h4 style="margin-top: 1em;"><label for="size">Auswahl Edelsplitt</label></h4>
-            <select id="size" placeholder="Edelspitt ausählen ..." style="width: 100%;">
+            <input id="article" style="width: 100%;" />
+            <!--select id="article" placeholder="Edelspitt ausählen ..." style="width: 100%;">
                 <option>0/2</option>
                 <option>40/100</option>
                 <option>16/22</option>
                 <option>2/8</option>
                 <option>8/16</option>
                 <option>8/22</option>
-            </select>
+            <!select-->
         </div>
         <div class="col-sm-2">
             <h4 style="margin-top: 1em;"><label for="size"></label></h4>
@@ -40,9 +41,9 @@
             $("#loadButton").kendoButton({
                 click: function (e) {
 
-                    initializeGrid();
+                    
 
-                    //initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value() );
+                    initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value(), $("#article").data("kendoComboBox").value());
 
 
 
@@ -54,7 +55,7 @@
                     var value = this.value();
 
                 }
-                , value: new Date()
+                ,  value: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 20)
             });
 
             $("#datepicker2").kendoDatePicker({
@@ -65,56 +66,50 @@
                 , value: new Date()
             });
 
-            $("#size").kendoComboBox();
 
-            var fabric = $("#fabric").data("kendoComboBox");
-            var select = $("#size").data("kendoComboBox");
+           
 
+            // Combo box
+            var articleData = [
+                { text: "40/100", value: "40/100" },
+                { text: "16/22", value: "16/22" },
+                { text: "2/8", value: "2/8" },
+                { text: "8/16", value: "8/16" },
+                { text: "8/22", value: "8/22" }
+              
+            ];
 
-            $("#get").click(function () {
-                alert('Thank you! Your Choice is:\n\nFabric ID: ' + fabric.value() + ' and Size: ' + select.value());
+            $("#article").kendoComboBox({
+
+                dataTextField: "text",
+                dataValueField: "value",
+                dataSource: articleData,
+                height: 100,
+                
             });
+
+            var combobox = $("#article").data("kendoComboBox");
+
+            combobox.select(combobox.ul.children().eq(0));
 
         });
     </script>
     <div class="row"><p></p></div>
     <div id="grid">
         <script>
-            /*
+            
             $(document).ready(function () {
-                initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value());
+                //alert($("#article").data("kendoComboBox").value());
+                initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value(), $("#article").data("kendoComboBox").value());
             });
-            */
-            /*
-            $(document).ready(function () {
-                initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value());
-            });
-            */
-
-            function initializeGrid() {
-
-
-                /*
-                    if (endDate < startDate) {
-
-                        $.when(kendo.ui.ExtOkCancelDialog.show({
-                            title: "OK/Cancel",
-                            message: "This is a sample ok/cancel box",
-                            icon: "k-ext-question"
-                        })
-                        ).done(function (response) {
-                            console.log(kendo.format("{0} button clicked",
-                                response.button));
-                        });
-
-                        return;
-
-                    }*/
+            
+        
+            function initializeGrid(startDate, endDate, article) {
 
                 $("#grid").kendoChart({
 
                     title: {
-                        text: "Heutige Produktion (t)"
+                        text: "Produktion (t)"
                     },
                     legend: {
                         position: "top"
@@ -126,7 +121,7 @@
 
                     dataSource: ({
                         transport: {
-                            read: "/CustomProductionCharts/GetDayProductionList",
+                            read: "/CustomProductionCharts/GetDayProductionList?startDate=" + kendo.toString(startDate, "yyyy-MM-dd HH:mm:ss") + "&endDate=" + kendo.toString(endDate, "yyyy-MM-dd HH:mm:ss" + "&article=" + article),
                             dataType: "json"
                         }
                     }),
@@ -138,21 +133,11 @@
                     }],
 
                     categoryAxis: {
-                        field: "ProdDate",
+                        field: "StrProdDate",
                         type: "catagory",
                         labels: {
-                               
-                            template: function (e) {
-                                var val = new Date(e.value);
-                                var label = kendo.toString(val, "dd.MM.yy");
-                                return label;
-                            }
-                        },
-                        title: {
-                            text: "Datum"
+                            rotation: -90
                         }
-
-                        
                     },
 
                     tooltip: {
@@ -163,9 +148,6 @@
                 });
 
             }
-
-            $(document).ready(initializeGrid);
-            $(document).bind("kendo:skinChange", initializeGrid);
 
         </script>
 

@@ -32,5 +32,7 @@ namespace WebApplication.Models
 
         public DateTime ProdDate { get; set; }
 
+        public String StrProdDate { get; set; }
+
     }
 }

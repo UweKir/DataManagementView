@@ -15,13 +15,9 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        public JsonResult GetDayProductionList()
+        public JsonResult GetDayProductionList(String startDate, String endDate, String article)
         {
-            String startDate = "2019-12-02 00:00:00";
-            String endDate = "2020-01-20 00:00:00";
-
-            String article = "2/8";
-
+            
             DateTime dtStart = DateTime.Now;
             DateTime dtEnd = DateTime.Now;
 
@@ -65,6 +61,8 @@ namespace WebApplication.Controllers
                                    ArticleName = p.ARTICLE,
                                    Location = p.LOCATION
                                };
+
+
                 foreach (var item in prodList)
                 {
                     WebApplication.Models.ProductionDetail prod = new WebApplication.Models.ProductionDetail();
@@ -80,6 +78,7 @@ namespace WebApplication.Controllers
                     prod.Name = item.ArticleName;
                     prod.Location = item.Location;
                     prod.ProdDate = item.ProdDate;
+                    prod.StrProdDate = item.ProdDate.ToString("dd.MM.yyyy");
 
                     lstResult.Add(prod);
 
