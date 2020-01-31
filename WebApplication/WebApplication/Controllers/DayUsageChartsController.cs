@@ -47,7 +47,7 @@ namespace WebApplication.Controllers
             DateTime dtStart = DateTime.Now;
             DateTime dtEnd = DateTime.Now;
 
-
+            
             if (!String.IsNullOrEmpty(startDate))
             {
                 dtStart = DateTime.ParseExact(startDate,

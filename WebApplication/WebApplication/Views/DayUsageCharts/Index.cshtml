@@ -18,8 +18,8 @@
             <input id="datepicker2" title="datepicker2" style="width: 100%" />
         </div>
         <div class="col-sm-2">
-            <h4 style="margin-top: 1em;"><label for="size">Auswahl Edelsplitt</label></h4>
-            <input id="article" style="width: 100%;" />
+            <h4 style="margin-top: 1em;"><label for="size">Auswahl Verbraucher</label></h4>
+            <input id="device" title="device" style="width: 100%;" />
             <!--select id="article" placeholder="Edelspitt ausählen ..." style="width: 100%;">
                 <option>0/2</option>
                 <option>40/100</option>
@@ -41,9 +41,11 @@
             $("#loadButton").kendoButton({
                 click: function (e) {
 
+                    alert("Hallo");
 
+                    alert($("#device").data("kendoComboBox").value());
 
-                    initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value(), $("#article").data("kendoComboBox").value());
+                    initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value(), $("#device").data("kendoComboBox").value());
 
 
 
@@ -70,27 +72,40 @@
 
 
             // Combo box
-            var articleData = [
-                { text: "SA-Sys-1", value: "SA-Sys-1" },
+            var deviceData = [
+                { text: "Band-29", value: "Band-29" },
                 { text: "SA-Sys-2", value: "SA-Sys-2" },
                 { text: "SA-Sys-3", value: "SA-Sys-3" },
                 { text: "SA-Sys-4", value: "8/16" },
                 { text: "8/22", value: "8/22" }
 
             ];
-
-            $("#device).kendoComboBox({
+            
+            $("#device").kendoComboBox({
 
                 dataTextField: "text",
                 dataValueField: "value",
+                dataSource: deviceData,
+                height: 100,
+
+            });
+            /*
+
+            
+            $("#device").kendoComboBox({
+
+                dataTextField: "Name",
+                dataValueField: "Name",
                 dataSource: ({
                     transport: {
                         read: "/DayUsageCharts/GetDevices",
-                        dataType: "json"
+                        dataType: 'json'
                     }
+                }),
                 height: 100
 
-            });
+                }).data("kendoComboBox");
+            */
 
             var combobox = $("#device").data("kendoComboBox");
 
@@ -104,16 +119,16 @@
 
             $(document).ready(function () {
                 //alert($("#article").data("kendoComboBox").value());
-                initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value(), $("#article").data("kendoComboBox").value());
+                initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value(), $("#device").data("kendoComboBox").value());
             });
 
 
-            function initializeGrid(startDate, endDate, article) {
+            function initializeGrid(startDate, endDate, device) {
 
                 $("#grid").kendoChart({
 
                     title: {
-                        text: "Produktion (t)"
+                        text: "Verbrauch (kWh)"
                     },
                     legend: {
                         position: "top"
@@ -125,7 +140,7 @@
 
                     dataSource: ({
                         transport: {
-                            read: "/CustomProductionCharts/GetDayProductionList?startDate=" + kendo.toString(startDate, "yyyy-MM-dd HH:mm:ss") + "&endDate=" + kendo.toString(endDate, "yyyy-MM-dd HH:mm:ss" + "&device=" + article),
+                            read: "/DayUsageCharts/GetDayUsageList?startDate=" + kendo.toString(startDate, "yyyy-MM-dd HH:mm:ss") + "&endDate=" + kendo.toString(endDate, "yyyy-MM-dd HH:mm:ss") + "&device=" + device,
                             dataType: "json"
                         }
                     }),
@@ -133,11 +148,11 @@
                     series: [{
                         type: "line",
                         field: "Value",
-                        name: "Produktion Edelsplit"
+                        name: "Stromverbrauch"
                     }],
 
                     categoryAxis: {
-                        field: "StrProdDate",
+                        field: "StrUsageDate",
                         type: "catagory",
                         labels: {
                             rotation: -90
@@ -146,7 +161,7 @@
 
                     tooltip: {
                         visible: true,
-                        format: "{0} t"
+                        format: "{0} kWh"
                     }
 
                 });
