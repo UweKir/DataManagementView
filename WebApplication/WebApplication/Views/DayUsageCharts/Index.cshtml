@@ -41,13 +41,8 @@
             $("#loadButton").kendoButton({
                 click: function (e) {
 
-                    alert("Hallo");
-
-                    alert($("#device").data("kendoComboBox").value());
-
+                   
                     initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value(), $("#device").data("kendoComboBox").value());
-
-
 
                 }
             });
@@ -80,7 +75,8 @@
                 { text: "8/22", value: "8/22" }
 
             ];
-            
+
+            /*
             $("#device").kendoComboBox({
 
                 dataTextField: "text",
@@ -89,7 +85,8 @@
                 height: 100,
 
             });
-            /*
+            */
+            
 
             
             $("#device").kendoComboBox({
@@ -104,12 +101,11 @@
                 }),
                 height: 100
 
-                }).data("kendoComboBox");
-            */
+            }).data("kendoComboBox");
+            
 
             var combobox = $("#device").data("kendoComboBox");
-
-            combobox.select(combobox.ul.children().eq(0));
+            combobox.value("*");
 
         });
     </script>
@@ -124,6 +120,8 @@
 
 
             function initializeGrid(startDate, endDate, device) {
+
+                //alert("/DayUsageCharts/GetDayUsageList?startDate=" + kendo.toString(startDate, "yyyy-MM-dd HH:mm:ss") + "&endDate=" + kendo.toString(endDate, "yyyy-MM-dd HH:mm:ss") + "&device=" + device);
 
                 $("#grid").kendoChart({
 
