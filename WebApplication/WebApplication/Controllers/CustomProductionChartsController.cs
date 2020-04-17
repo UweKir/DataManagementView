@@ -46,9 +46,14 @@ namespace WebApplication.Controllers
 
             DateTime day = dtStart;
 
+            if (article == "*" || article == "all")
+                return GetDayProductionListComplete(dtStart, dtEnd);
+
+
             using (KTBDataManagerEntities context = new KTBDataManagerEntities())
             {
-                var prodList = from p in context.view_dailyProduction
+                
+               var prodList = from p in context.view_dailyProduction
                                where p.UNIT.ToLower() == unit &&  
                                      p.PROD_DATE >= dtStart.Date &&
                                      p.PROD_DATE <= dtEnd.Date &&
@@ -77,6 +82,56 @@ namespace WebApplication.Controllers
 
                     prod.Name = item.ArticleName;
                     prod.Location = item.Location;
+                    prod.ProdDate = item.ProdDate;
+                    prod.StrProdDate = item.ProdDate.ToString("dd.MM.yyyy");
+
+                    lstResult.Add(prod);
+
+                }
+            }
+
+            return Json(lstResult, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetDayProductionListComplete(DateTime dtStart, DateTime dtEnd)
+        {
+
+           
+            List<ProductionDetail> lstResult = new List<ProductionDetail>();
+
+            String unit = "t";
+
+
+
+            using (KTBDataManagerEntities context = new KTBDataManagerEntities())
+            {
+
+                var prodList = from p in context.view_dailyProduction
+                               where p.UNIT.ToLower() == unit &&
+                                     p.PROD_DATE >= dtStart.Date &&
+                                     p.PROD_DATE <= dtEnd.Date
+                               group p by new { p.PROD_DATE } into g
+                               select new
+                               {
+                                   ProdDate = g.Key.PROD_DATE,
+                                   Value = g.Sum(p => p.VALUE)
+
+                               };
+
+               
+
+                foreach (var item in prodList)
+                {
+                    WebApplication.Models.ProductionDetail prod = new WebApplication.Models.ProductionDetail();
+                    prod.Unit = unit;
+
+                    prod.Value = 0;
+
+                    if (item.Value.HasValue)
+                    {
+                        prod.Value = item.Value.Value;
+                    }
+
                     prod.ProdDate = item.ProdDate;
                     prod.StrProdDate = item.ProdDate.ToString("dd.MM.yyyy");
 

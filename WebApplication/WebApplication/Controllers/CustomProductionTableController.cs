@@ -36,6 +36,12 @@ namespace WebApplication.Controllers
 
         private Decimal totalEdelSplit = 0m;
 
+        private Decimal totalBrecher = 0m;
+
+        private Decimal totalDeponie = 0m;
+
+        private Decimal totalMaterial = 0m;
+
         #endregion
 
         // GET: CustomProductionTable
@@ -141,7 +147,14 @@ namespace WebApplication.Controllers
                 }
 
                 deponie = vorsieb - p40_100;
-                abfall = (brecher + vorsieb) - totalEdelSplit - brechsand - deponie;
+                abfall = (brecher + vorsieb) - totalEdelSplit - brechsand - vorsieb - p40_100;
+
+                totalBrecher = brecher + vorsieb;
+                totalDeponie = (brecher + vorsieb) - (es16_22 + es2_8 + es8_16 + es8_22);
+                totalMaterial = es16_22 + es2_8 + es8_16 + es8_22;
+
+
+
 
 
                 return Json(GetProductionTableLines(), JsonRequestBehavior.AllowGet);
@@ -157,19 +170,21 @@ namespace WebApplication.Controllers
             // Brecher
             lstResult.Add(new ProductionTableLine() { Group = "Brecher", Tons = brecher, Name = "Brecher" });
             lstResult.Add(new ProductionTableLine() { Group = "Brecher", Tons = vorsieb, Name = "Vorsieb" });
+            lstResult.Add(new ProductionTableLine() { Group = "Brecher", Tons = totalBrecher, Name = "Total" });
 
             //Deponie
             lstResult.Add(new ProductionTableLine() { Group = "Deponie", Tons = brechsand, Name = "Brechsand 0/2" });
             lstResult.Add(new ProductionTableLine() { Group = "Deponie", Tons = p40_100, Name = "40/100" });
             lstResult.Add(new ProductionTableLine() { Group = "Deponie", Tons = deponie, Name = "Deponie" });
             lstResult.Add(new ProductionTableLine() { Group = "Deponie", Tons = abfall, Name = "Abfall" });
+            lstResult.Add(new ProductionTableLine() { Group = "Deponie", Tons = totalDeponie, Name = "Total" });
 
             //Edelsplit
             lstResult.Add(new ProductionTableLine() { Group = "EdelSplitt", Tons = es16_22, Name = "Edelsplitt 16/22" });
             lstResult.Add(new ProductionTableLine() { Group = "EdelSplitt", Tons = es2_8, Name = "Edelsplitt 2/8" });
             lstResult.Add(new ProductionTableLine() { Group = "EdelSplitt", Tons = es8_16, Name = "Edelsplitt 8/16" });
             lstResult.Add(new ProductionTableLine() { Group = "EdelSplitt", Tons = es8_22, Name = "Edelsplitt 8/22" });
-
+            lstResult.Add(new ProductionTableLine() { Group = "EdelSplitt", Tons = totalMaterial, Name = "Total" });
 
             // set runtime and average
             foreach (ProductionTableLine line in lstResult)
