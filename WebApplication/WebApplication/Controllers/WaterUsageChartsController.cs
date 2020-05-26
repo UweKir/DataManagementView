@@ -7,9 +7,9 @@ using WebApplication.Models;
 
 namespace WebApplication.Controllers
 {
-    public class DayUsageChartsController : Controller
+    public class WaterUsageChartsController : Controller
     {
-        // GET: DayUsageCharts
+        // GET: WaterUsageCharts
         public ActionResult Index()
         {
             return View();
@@ -25,12 +25,12 @@ namespace WebApplication.Controllers
                 var devList = from d in context.device
                               select d;
 
-                
-                foreach(var dev in devList)
+
+                foreach (var dev in devList)
                 {
                     ProdDevice pDevice = new ProdDevice() { Key = dev.dev_id.ToString(), Name = dev.dev_name };
 
-                    if ((dev.dev_name != "Einspeisung") && (dev.dev_name != "Tag") && (!dev.dev_name.ToUpper().Contains("SYS-")) && (!dev.dev_name.ToUpper().Contains("PUMPE")))
+                    if (dev.dev_name.ToUpper().Contains("PUMPE"))
                         lstDevices.Add(pDevice);
                 }
 
@@ -48,7 +48,7 @@ namespace WebApplication.Controllers
             DateTime dtStart = DateTime.Now;
             DateTime dtEnd = DateTime.Now;
 
-            
+
             if (!String.IsNullOrEmpty(startDate))
             {
                 dtStart = DateTime.ParseExact(startDate,
@@ -70,12 +70,12 @@ namespace WebApplication.Controllers
 
 
             List<UsageDetail> lstResult = new List<UsageDetail>();
-            
+
 
             using (KTBDataManagerEntities context = new KTBDataManagerEntities())
             {
                 var usageList = from usage in context.view_dailyUsage
-                                where usage.UNIT.ToLower() == "kwh" &&
+                                where usage.UNIT.ToLower() == "qm" &&
                                       usage.use_date >= dtStart.Date &&
                                       usage.use_date <= dtEnd.Date &&
                                       usage.DEVICE == device
@@ -89,7 +89,7 @@ namespace WebApplication.Controllers
                                 };
 
 
-                foreach(var use in usageList)
+                foreach (var use in usageList)
                 {
                     UsageDetail detail = new UsageDetail();
                     detail.Name = use.ArticleName;
@@ -103,7 +103,7 @@ namespace WebApplication.Controllers
 
                     lstResult.Add(detail);
 
- 
+
                 }
 
             }
@@ -119,21 +119,21 @@ namespace WebApplication.Controllers
             using (KTBDataManagerEntities context = new KTBDataManagerEntities())
             {
                 var usageList = from u in context.view_dailyUsage
-                               where  u.UNIT.ToLower() == "kwh"
-                                      && u.use_date >= startDate.Date
-                                      && u.use_date <= endDate.Date
-                               group u by new { u.use_date } into g
-                               select new
-                               {
-                                   Date = g.Key.use_date,
-                                   Value = g.Sum(p => p.VALUE)
+                                where u.UNIT.ToLower() == "qm"
+                                       && u.use_date >= startDate.Date
+                                       && u.use_date <= endDate.Date
+                                group u by new { u.use_date } into g
+                                select new
+                                {
+                                    Date = g.Key.use_date,
+                                    Value = g.Sum(p => p.VALUE)
 
-                               };
+                                };
 
                 foreach (var use in usageList)
                 {
                     UsageDetail detail = new UsageDetail();
-                   
+
                     detail.UsageDate = use.Date;
                     detail.StrUsageDate = use.Date.ToString("dd.MM.yyyy");
 

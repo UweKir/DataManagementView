@@ -129,4 +129,3 @@ D:\DevSource\DataManagementView\WebApplication\WebApplication\obj\Release\WebApp
 D:\DevSource\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.csproj.CopyComplete
 D:\DevSource\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.dll
 D:\DevSource\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.pdb
-D:\DevSource\DataManagementView\WebApplication\WebApplication\obj\Release\WebApplication.csprojAssemblyReference.cache

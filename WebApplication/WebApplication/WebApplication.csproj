@@ -211,6 +211,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\WaterUsageChartsController.cs" />
     <Compile Include="DBStore.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -290,7 +291,6 @@
     <Compile Include="version.cs">
       <DependentUpon>DBStore.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\CurrentProductionController.cs" />
     <Compile Include="view_dailyProduction.cs">
       <DependentUpon>DBStore.tt</DependentUpon>
     </Compile>
@@ -3471,6 +3471,7 @@
     <Content Include="Views\CustomProductionTable\Index.cshtml" />
     <Content Include="Views\CustomProductionCharts\Index.cshtml" />
     <Content Include="Views\DayUsageCharts\Index.cshtml" />
+    <Content Include="Views\WaterUsageCharts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

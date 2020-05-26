@@ -1,0 +1,175 @@
+﻿
+@{
+    ViewBag.Title = "WaterUsageChartsView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Wasser Verbrauch</h1>
+
+<div class="container">
+    <div class="row" width="100%">
+        <div class="col-sm-2">
+            <h4 style="margin-top: 1em;"><label for="size">Datum von:</label></h4>
+            <input id="datepicker" title="datepicker" style="width: 100%" />
+        </div>
+        <div class="col-sm-2">
+            <h4 style="margin-top: 1em;"><label for="size">Datum bis:</label></h4>
+            <input id="datepicker2" title="datepicker2" style="width: 100%" />
+        </div>
+        <div class="col-sm-2">
+            <h4 style="margin-top: 1em;"><label for="size">Auswahl Verbraucher</label></h4>
+            <input id="device" title="device" style="width: 100%" />
+            <!--select id="article" placeholder="Edelspitt ausählen ..." style="width: 100%;">
+                <option>0/2</option>
+                <option>40/100</option>
+                <option>16/22</option>
+                <option>2/8</option>
+                <option>8/16</option>
+                <option>8/22</option>
+            <!select-->
+        </div>
+        <div class="col-sm-2">
+            <h4 style="margin-top: 1em;"><label for="size"></label></h4>
+            <button type="button" class="btn btn-primary btn-lg" id="loadButton">Laden</button>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+
+
+            $("#loadButton").kendoButton({
+                click: function (e) {
+
+
+                    initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value(), $("#device").data("kendoComboBox").value());
+
+                }
+            });
+
+            $("#datepicker").kendoDatePicker({
+                change: function () {
+                    var value = this.value();
+
+                }
+                , value: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - 20)
+            });
+
+            $("#datepicker2").kendoDatePicker({
+                change: function () {
+                    var value = this.value();
+
+                }
+                , value: new Date()
+            });
+
+
+
+
+            // Combo box
+            var deviceData = [
+                { text: "Band-29", value: "Band-29" },
+                { text: "SA-Sys-2", value: "SA-Sys-2" },
+                { text: "SA-Sys-3", value: "SA-Sys-3" },
+                { text: "SA-Sys-4", value: "8/16" },
+                { text: "8/22", value: "8/22" }
+
+            ];
+
+            /*
+            $("#device").kendoComboBox({
+
+                dataTextField: "text",
+                dataValueField: "value",
+                dataSource: deviceData,
+                height: 100,
+
+            });
+            */
+
+
+
+            $("#device").kendoComboBox({
+
+                dataTextField: "Name",
+                dataValueField: "Name",
+                dataSource: ({
+                    transport: {
+                        read: "/WaterUsageCharts/GetDevices",
+                        dataType: 'json'
+                    }
+                }),
+                height: 100
+
+            }).data("kendoComboBox");
+
+
+            var combobox = $("#device").data("kendoComboBox");
+            combobox.value("*");
+
+        });
+    </script>
+    <div class="row"><p></p></div>
+    <div id="grid">
+        <script>
+
+            $(document).ready(function () {
+                //alert($("#article").data("kendoComboBox").value());
+                initializeGrid($("#datepicker").data("kendoDatePicker").value(), $("#datepicker2").data("kendoDatePicker").value(), $("#device").data("kendoComboBox").value());
+            });
+
+
+            function initializeGrid(startDate, endDate, device) {
+
+                //alert("/DayUsageCharts/GetDayUsageList?startDate=" + kendo.toString(startDate, "yyyy-MM-dd HH:mm:ss") + "&endDate=" + kendo.toString(endDate, "yyyy-MM-dd HH:mm:ss") + "&device=" + device);
+
+                $("#grid").kendoChart({
+
+                    title: {
+                        text: "Verbrauch (qm)"
+                    },
+                    chartArea: {
+                        height: 600
+                    },
+                    legend: {
+                        position: "top"
+                    },
+                    seriesDefaults: {
+                        type: "column",
+                        stack: true
+                    },
+
+                    dataSource: ({
+                        transport: {
+                            read: "/WaterUsageCharts/GetDayUsageList?startDate=" + kendo.toString(startDate, "yyyy-MM-dd HH:mm:ss") + "&endDate=" + kendo.toString(endDate, "yyyy-MM-dd HH:mm:ss") + "&device=" + device,
+                            dataType: "json"
+                        }
+                    }),
+
+                    series: [{
+                        type: "line",
+                        field: "Value",
+                        name: "Wasserverbrauch"
+                    }],
+
+                    categoryAxis: {
+                        field: "StrUsageDate",
+                        type: "catagory",
+                        labels: {
+                            rotation: -90
+                        }
+                    },
+
+                    tooltip: {
+                        visible: true,
+                        format: "{0} kWh"
+                    }
+
+                });
+
+            }
+
+        </script>
+
+    </div>
+
